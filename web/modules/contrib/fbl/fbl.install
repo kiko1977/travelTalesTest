@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the fbl module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function fbl_uninstall() {
+  \Drupal::configFactory()->getEditable('fbl.settings')->delete();
+}

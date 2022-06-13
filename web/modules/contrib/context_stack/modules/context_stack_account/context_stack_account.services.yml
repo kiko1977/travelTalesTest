@@ -1,0 +1,14 @@
+services:
+  context_stack.account:
+    class: Drupal\context_stack\ContextStack
+    factory: ['@context_stack.factory', createStack]
+    arguments: [account]
+    calls:
+      - [addConstraint, ['EntityType', 'user']]
+    tags:
+      - { name: context_stack }
+  context_stack_account.controller_wrapper_subscriber:
+    class: Drupal\context_stack_account\EventSubscriber\ControllerWrapperSubscriber
+    arguments: ['@context_stack.account', '@context_stack.factory']
+    tags:
+      - { name: event_subscriber }

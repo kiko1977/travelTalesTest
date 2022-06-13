@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * The Context Stack View module file.
+ */
+
+use Drupal\context_stack\ContextStackFactory;
+use Drupal\context_stack\Plugin\Context\GenericEntityContext;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_build_defaults_alter().
+ */
+function context_stack_view_entity_build_defaults_alter(array &$build, EntityInterface $entity, $view_mode) {
+  $collection = ContextStackFactory::get()->createCollection();
+  $entity_type_id = $entity->getEntityTypeId();
+  $label = $entity->getEntityType()->getLabel();
+  $collection->addContext(GenericEntityContext::fromEntity($entity, $label), $entity_type_id);
+  $collection->addContext(GenericEntityContext::fromEntity($entity, $label), 'entity');
+  $build['#context_stack']['view'] = $collection;
+  // Add cacheability from the context stack to the render array. This is done
+  // by temporarily adding the collection to the stack, fetch its calculated
+  // metadata, then remove it so the render system would render every entity
+  // one-by-one, using the current context that is being pushed via pre-render.
+  /** @var \Drupal\context_stack\ContextStackInterface $context_stack */
+  $context_stack = \Drupal::service('context_stack.view');
+  $context_stack->push(clone $collection);
+  CacheableMetadata::createFromRenderArray($build)
+    ->addCacheableDependency($context_stack)
+    ->applyTo($build);
+  $context_stack->pop();
+  // Add the pre-render callback that will push the current context into the
+  // context stack. The post-render callback is responsible for removing the
+  // added context collection from the stack afterwards.
+  $build['#pre_render'][] = [
+    '\Drupal\context_stack_view\Render\ViewStack',
+    'preRender',
+  ];
+  $build['#post_render'][] = [
+    '\Drupal\context_stack_view\Render\ViewStack',
+    'postRender',
+  ];
+}

@@ -1,0 +1,13 @@
+name: 'Field Based Login'
+description: 'Allows users to login with different fields.'
+core_version_requirement: ^8 || ^9
+type: module
+configure: fbl.configuration
+package: User
+dependencies:
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2022-04-16
+version: '8.x-2.0'
+project: 'fbl'
+datestamp: 1650135516

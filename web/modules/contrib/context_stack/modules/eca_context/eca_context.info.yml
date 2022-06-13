@@ -1,0 +1,13 @@
+name: 'Context Stack ECA'
+type: module
+description: 'Provides a context stack for ECA. Requires drupal/eca.'
+core_version_requirement: ^9 || ^10
+package: ECA
+dependencies:
+  - eca:eca
+  - context_stack:context_stack
+
+# Information added by Drupal.org packaging script on 2022-06-02
+version: '1.0.2'
+project: 'context_stack'
+datestamp: 1654168899

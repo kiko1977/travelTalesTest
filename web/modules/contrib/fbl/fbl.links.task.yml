@@ -1,0 +1,4 @@
+fbl.configuration:
+  base_route: fbl.configuration
+  title: 'Settings'
+  route_name: fbl.configuration

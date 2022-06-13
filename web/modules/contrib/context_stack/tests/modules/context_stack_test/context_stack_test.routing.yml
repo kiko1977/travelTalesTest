@@ -1,0 +1,12 @@
+context_stack_test.empty:
+  path: '/context-stack-empty'
+  defaults:
+    _controller: 'Drupal\context_stack_test\Controller\EmptyResponseController::empty'
+  requirements:
+    _access: 'TRUE'
+context_stack_test.redirect:
+  path: '/context-stack-redirect'
+  defaults:
+    _controller: 'Drupal\context_stack_test\Controller\RedirectController::redirect'
+  requirements:
+    _access: 'TRUE'

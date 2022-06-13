@@ -1,0 +1,14 @@
+{
+  "name": "drupal/context_stack",
+  "type": "drupal-module",
+  "description": "Context Stack is a module for Drupal, which provides a distinct place for holding context values.",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://drupal.org/project/issues/context_stack",
+    "source": "https://drupal.org/project/context_stack"
+  },
+  "require": {
+    "php": ">=7.4"
+  }
+}

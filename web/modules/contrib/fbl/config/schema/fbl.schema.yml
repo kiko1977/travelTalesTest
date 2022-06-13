@@ -1,0 +1,23 @@
+fbl.settings:
+  type: config_object
+  label: 'Field Based Login settings'
+  mapping:
+    field_based_login:
+      type: mapping
+      label: 'Field Based Login'
+      mapping:
+        field:
+          type: string
+          label: 'Unique field'
+        allow_user_name:
+          type: boolean
+          label: 'Allow login with username'
+        allow_user_email:
+          type: boolean
+          label: 'Allow login with e-mail'
+        label:
+          type: text
+          label: 'User name field label'
+        field_desc:
+          type: text
+          label: 'User name field description'

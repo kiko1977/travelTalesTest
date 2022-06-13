@@ -1,0 +1,16 @@
+field.formatter.third_party.field_label:
+  type: mapping
+  label: 'Field Label Formatter entity display settings'
+  mapping:
+    label_class:
+      type: string
+      label: 'Extra classes for the wrapper element'
+    label_class_select:
+      type: string
+      label: 'Class selection for the wrapper element'
+    label_value:
+      type: label
+      label: 'New value for the label'
+    label_tag:
+      type: string
+      label: 'Custom label wrapper tag'

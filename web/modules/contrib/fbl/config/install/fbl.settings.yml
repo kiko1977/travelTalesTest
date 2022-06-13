@@ -1,0 +1,7 @@
+field_based_login:
+  field: ''
+  allow_user_name: 1
+  allow_user_email: 0
+  label: ''
+  field_desc: ''
+langcode: en

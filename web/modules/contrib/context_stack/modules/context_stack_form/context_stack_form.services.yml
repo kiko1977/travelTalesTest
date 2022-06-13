@@ -1,0 +1,7 @@
+services:
+  context_stack.form:
+    class: Drupal\context_stack\ContextStack
+    factory: ['@context_stack.factory', createStack]
+    arguments: [form]
+    tags:
+      - { name: context_stack }

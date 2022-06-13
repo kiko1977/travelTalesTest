@@ -1,0 +1,12 @@
+type: module
+name: Context Stack Test
+description: "Context Stack test module. Only meant for testing."
+core_version_requirement: '^9'
+package: Other
+dependencies:
+  - context_stack:context_stack
+
+# Information added by Drupal.org packaging script on 2022-06-02
+version: '1.0.2'
+project: 'context_stack'
+datestamp: 1654168899

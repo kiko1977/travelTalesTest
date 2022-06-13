@@ -1,0 +1,12 @@
+services:
+  context_stack.view:
+    class: Drupal\context_stack\ContextStack
+    factory: ['@context_stack.factory', createStack]
+    arguments: [view]
+    tags:
+      - { name: context_stack }
+  context_stack_view.controller_wrapper_subscriber:
+    class: Drupal\context_stack_view\EventSubscriber\ControllerWrapperSubscriber
+    arguments: ['@http_kernel.controller.argument_resolver', '@context_stack.view', '@context_stack.factory']
+    tags:
+      - { name: event_subscriber }

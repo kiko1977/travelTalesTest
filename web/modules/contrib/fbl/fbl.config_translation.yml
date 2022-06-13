@@ -1,0 +1,5 @@
+fbl.configuration:
+  title: 'Field Based Login'
+  base_route_name: fbl.configuration
+  names:
+    - fbl.settings

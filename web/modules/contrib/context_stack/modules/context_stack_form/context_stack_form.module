@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * The Context Stack Form module file.
+ */
+
+use Drupal\context_stack\ContextStackFactory;
+use Drupal\context_stack\Plugin\Context\GenericEntityContext;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function context_stack_form_form_alter(&$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  $entities = [];
+  foreach ($form as $entry) {
+    if (($entry instanceof EntityInterface) && !isset($entities[$entry->getEntityTypeId()])) {
+      $entities[$entry->getEntityTypeId()] = $entry;
+    }
+  }
+  if ($form_object instanceof EntityFormInterface) {
+    $entity = $form_object->getEntity();
+    if (!isset($entities[$entity->getEntityTypeId()])) {
+      $entities[$entity->getEntityTypeId()] = $entity;
+    }
+  }
+  if (empty($entities)) {
+    return;
+  }
+
+  $collection = ContextStackFactory::get()->createCollection();
+  foreach ($entities as $entity_type_id => $entity) {
+    $collection->addContext(GenericEntityContext::fromEntity($entity, $entity->getEntityType()->getLabel()), $entity_type_id);
+  }
+  $form['#context_stack']['form'] = $collection;
+  // Add cacheability from the context stack to the render array. This is done
+  // by temporarily adding the collection to the stack, fetch its calculated
+  // metadata, then remove it so the render system would render every entity
+  // one-by-one, using the current context that is being pushed via pre-render.
+  /** @var \Drupal\context_stack\ContextStackInterface $context_stack */
+  $context_stack = \Drupal::service('context_stack.form');
+  $context_stack->push(clone $collection);
+  CacheableMetadata::createFromRenderArray($form)
+    ->addCacheableDependency($context_stack)
+    ->applyTo($form);
+  $context_stack->pop();
+  // Add the pre-render callback that will push the current context into the
+  // context stack. The post-render callback is responsible for removing the
+  // added context collection from the stack afterwards.
+  $form['#pre_render'][] = [
+    '\Drupal\context_stack_form\Render\FormStack',
+    'preRender',
+  ];
+  $form['#post_render'][] = [
+    '\Drupal\context_stack_form\Render\FormStack',
+    'postRender',
+  ];
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ *
+ * This hook is only available when inline_entity_form is installed.
+ */
+function context_stack_form_inline_entity_form_entity_form_alter(&$form, FormStateInterface $form_state) {
+  context_stack_form_form_alter($form, $form_state);
+}

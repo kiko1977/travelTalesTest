@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Context Stack install file.
+ */
+
+/**
+ * Moved the view and account stack into their own sub-modules, that will be
+ * installed with this update.
+ *
+ * Export your configuration after performing this update.
+ */
+function context_stack_update_8101(&$sandbox) {
+  try {
+    /** @var \Drupal\Core\Extension\ModuleInstaller $installer */
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['context_stack_account', 'context_stack_view']);
+    drupal_flush_all_caches();
+    return t('Module installation completed. Export your configuration to synchronize the applied changes.');
+  }
+  catch (\Exception $e) {
+    return t('An error occured. The error was: @error', ['@error' => $e->getMessage()]);
+  }
+}
