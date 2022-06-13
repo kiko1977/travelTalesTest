@@ -1,0 +1,38 @@
+.label-above,
+.uk-form-label {
+  color: orange;
+  font-size: 15px;
+}
+
+.field-above .uk-margin {
+  margin-top: 5px!important;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.field-above {
+  margin-top:20px;
+}
+
+.field-above.referenced-field .uk-article-title {
+  display:none;
+}
+
+.field-above.referenced-field article {
+  display:flex;
+}
+
+.field-above.referenced-field article .field-above.left {
+  float: left;
+  width: auto;
+  display:flex;
+  margin-right:10px;
+}
+
+.field-above.referenced-field article .field-above.right {
+  float: left;
+  display: flex;
+  width: auto;
+  padding-top:2px;
+}

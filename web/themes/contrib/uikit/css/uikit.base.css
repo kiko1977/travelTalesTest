@@ -1,0 +1,13 @@
+/**
+ * @file
+ * CSS reset/normalize plus HTML element styling.
+ */
+
+@import "custom/custom.base.css";
+
+details.uk-accordion ::-webkit-details-marker {
+  display:none;
+}
+details.uk-accordion summary:focus {
+  outline: 0;
+}

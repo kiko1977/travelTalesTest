@@ -1,0 +1,8 @@
+custom_login_form.login:
+  path: '/user/login'
+  defaults:
+    _controller: '\Drupal\welcome_module\Controller
+\WelcomeController::welcome'
+    _title: 'Welcome to My Module in Drupal 9'
+  requirements:
+    _permission: 'access content'

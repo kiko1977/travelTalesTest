@@ -1,0 +1,17 @@
+name: 'UIkit Components'
+description: 'Companion module to the UIkit base theme to provide additional components and functionality.'
+package: 'UIkit'
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+dependencies:
+  - drupal:link
+  - drupal:menu_link_content
+
+configure: uikit_components.admin
+
+# Information added by Drupal.org packaging script on 2022-03-04
+version: '8.x-3.4'
+project: 'uikit_components'
+datestamp: 1646401649
